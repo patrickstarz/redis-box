@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.NewConnectionController">
+    <children>
+        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab text="常规">
+               <content>
+                  <GridPane alignment="TOP_CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints vgrow="SOMETIMES" maxHeight="50"/>
+                      <RowConstraints vgrow="SOMETIMES" maxHeight="50"/>
+                      <RowConstraints vgrow="SOMETIMES" maxHeight="50"/>
+                      <RowConstraints vgrow="SOMETIMES" maxHeight="50"/>
+                    </rowConstraints>
+                     <children>
+                        <Label text="Name:" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
+                           <GridPane.margin>
+                              <Insets right="20.0" />
+                           </GridPane.margin></Label>
+                        <TextField GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                        <Label text="Host:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="20.0" />
+                           </GridPane.margin></Label>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Port:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="20.0" />
+                           </GridPane.margin></Label>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Auth:" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets right="20.0" />
+                           </GridPane.margin></Label>
+                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </content>
+                </Tab>
+                <Tab text="SSH 隧道" />
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
