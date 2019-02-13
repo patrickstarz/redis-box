@@ -5,4 +5,5 @@ package com.rick.redisbox.controller;
  * @date 2019/2/11
  */
 public class NewConnectionController {
+
 }

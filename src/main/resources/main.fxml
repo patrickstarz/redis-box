@@ -7,50 +7,41 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.MainController">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
-   <children>
-      <BorderPane prefHeight="1000" prefWidth="1000">
-         <left>
-            <TreeView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </left>
-         <top>
-            <MenuBar BorderPane.alignment="CENTER">
-              <menus>
+<BorderPane prefHeight="1000" prefWidth="1000"
+            xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.rick.redisbox.controller.MainController">
+    <left>
+        <TreeView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+    </left>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
                 <Menu mnemonicParsing="false" text="连接(C)">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="新建..." fx:id="menu_new_connection" onAction="#onNewConnection"/>
-                  </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="新建..." fx:id="menu_new_connection"
+                                  onAction="#onNewConnection"/>
+                    </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="编辑(E)">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                    </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="帮助(H)">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About"/>
+                    </items>
                 </Menu>
-              </menus>
-            </MenuBar>
-         </top>
-         <center>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
-         </center>
-      </BorderPane>
-   </children>
-</GridPane>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0"/>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
