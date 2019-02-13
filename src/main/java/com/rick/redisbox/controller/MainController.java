@@ -16,7 +16,7 @@ public class MainController {
 
     @FXML
     protected void onNewConnection() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/new_connection.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("new_connection.fxml"));
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);  //模态
