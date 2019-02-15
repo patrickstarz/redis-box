@@ -1,8 +1,21 @@
+apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'application'
 
 repositories {
     jcenter()
     mavenCentral()
+}
+
+mainClassName = "com.rick.redisbox.RedisBoxApplication"
+
+jar {
+    baseName = 'redis-box'
+    version = '0.0.1'
+    manifest {
+        attributes "Manifest-Version": 1.0,
+                "Main-Class": 'com.rick.redisbox.RedisBoxApplication'
+    }
 }
 
 dependencies {
