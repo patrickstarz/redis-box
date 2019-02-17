@@ -7,18 +7,18 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.NewConnectionController">
-    <tabs>
-        <Tab text="常规">
-            <content>
-                <GridPane alignment="TOP_CENTER" maxHeight="200" style="-fx-fill-height: 300px">
+<BorderPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.NewConnectionController">
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <Tab text="常规">
+                <GridPane alignment="TOP_CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200" />
                     </columnConstraints>
                     <rowConstraints>
@@ -28,43 +28,43 @@
                         <RowConstraints maxHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                    <children>
-                        <Label text="Name:" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
-                            <GridPane.margin>
-                                <Insets right="20.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-                        <Label text="Host:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                            <GridPane.margin>
-                                <Insets right="20.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Port:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                            <GridPane.margin>
-                                <Insets right="20.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Auth:" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                            <GridPane.margin>
-                                <Insets right="20.0" />
-                            </GridPane.margin>
-                        </Label>
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="4">
-                            <buttons>
-                                <Button mnemonicParsing="false" text="确定" />
-                                <Button mnemonicParsing="false" text="取消" />
-                            </buttons>
-                        </ButtonBar>
-                    </children>
+                    <Label text="Name:" GridPane.halignment="RIGHT" GridPane.rowIndex="0">
+                        <GridPane.margin>
+                            <Insets right="20.0" />
+                        </GridPane.margin>
+                    </Label>
+                    <TextField GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                    <Label text="Host:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                            <Insets right="20.0" />
+                        </GridPane.margin>
+                    </Label>
+                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label text="Port:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                        <GridPane.margin>
+                            <Insets right="20.0" />
+                        </GridPane.margin>
+                    </Label>
+                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label text="Auth:" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                        <GridPane.margin>
+                            <Insets right="20.0" />
+                        </GridPane.margin>
+                    </Label>
+                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 </GridPane>
-            </content>
-        </Tab>
-        <Tab text="SSH 隧道">
+            </Tab>
+            <Tab text="SSH 隧道">
 
-        </Tab>
-    </tabs>
-</TabPane>
+            </Tab>
+        </TabPane>
+    </center>
+    <bottom>
+        <ButtonBar prefHeight="40.0" BorderPane.alignment="CENTER">
+            <buttons>
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfirmNewConn" text="确定" fx:id="btnConfirmNewConn"/>
+                <Button mnemonicParsing="false" onAction="#onCancelNewConn" text="取消" />
+            </buttons>
+        </ButtonBar>
+    </bottom>
+</BorderPane>

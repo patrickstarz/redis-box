@@ -20,7 +20,7 @@ public class MainController {
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);  //模态
-        stage.setScene(new Scene(root, 400, 550));
+        stage.setScene(new Scene(root));
         stage.show();
     }
 }
