@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.NewConnectionController">
+<BorderPane prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.NewConnectionController">
     <center>
         <TabPane tabClosingPolicy="UNAVAILABLE">
             <Tab text="常规">
@@ -33,25 +33,25 @@
                             <Insets right="20.0" />
                         </GridPane.margin>
                     </Label>
-                    <TextField GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                    <TextField fx:id="txtConnName" promptText="Connection name" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
                     <Label text="Host:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                         <GridPane.margin>
                             <Insets right="20.0" />
                         </GridPane.margin>
                     </Label>
-                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtConnHost" promptText="redis-server host or ip" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Label text="Port:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                         <GridPane.margin>
                             <Insets right="20.0" />
                         </GridPane.margin>
                     </Label>
-                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <TextField fx:id="txtConnPort" text="6379" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label text="Auth:" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                         <GridPane.margin>
                             <Insets right="20.0" />
                         </GridPane.margin>
                     </Label>
-                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <TextField fx:id="txtConnAuth" promptText="(Optional)auth password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 </GridPane>
             </Tab>
             <Tab text="SSH 隧道">
@@ -62,9 +62,13 @@
     <bottom>
         <ButtonBar prefHeight="40.0" BorderPane.alignment="CENTER">
             <buttons>
-                <Button defaultButton="true" mnemonicParsing="false" onAction="#onConfirmNewConn" text="确定" fx:id="btnConfirmNewConn"/>
-                <Button mnemonicParsing="false" onAction="#onCancelNewConn" text="取消" />
+                <Button fx:id="btnTestNewConn" mnemonicParsing="false" onAction="#onTestNewConn" prefWidth="150.0" text="Test Connection" ButtonBar.buttonData="LEFT" />
+                <Button fx:id="btnConfirmNewConn" defaultButton="true" mnemonicParsing="false" onAction="#onConfirmNewConn" text="OK" />
+                <Button mnemonicParsing="false" onAction="#onCancelNewConn" text="Cancel" />
             </buttons>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
         </ButtonBar>
     </bottom>
 </BorderPane>

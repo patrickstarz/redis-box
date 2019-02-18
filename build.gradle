@@ -22,4 +22,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile group: 'redis.clients', name: 'jedis', version: '3.0.1'
+    compile 'org.apache.commons:commons-lang3:3.8.1'
 }
