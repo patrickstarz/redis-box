@@ -1,5 +1,6 @@
 package com.rick.redisbox.controller;
 
+import com.rick.redisbox.utils.ToastUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -49,17 +50,13 @@ public class NewConnectionController {
                 jedis.auth(auth);
             }
             if (jedis.isConnected()) {
-                Alert information = new Alert(Alert.AlertType.INFORMATION, "Welocme to JavaFX");
-                information.setTitle("Tip");
-                information.setHeaderText("");
-                information.setContentText("Successful Connected to server");
-                information.showAndWait();
+                ToastUtils.alert(Alert.AlertType.INFORMATION, "Tip", "", "Successful Connected to server!");
+            } else {
+                ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert error = new Alert(Alert.AlertType.ERROR, "Connection failed");
-            error.setHeaderText("");
-            error.showAndWait();
+            ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
         }
     }
 }
