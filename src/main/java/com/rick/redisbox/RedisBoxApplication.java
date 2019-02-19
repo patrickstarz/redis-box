@@ -10,7 +10,7 @@ public class RedisBoxApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/main.fxml"));
         primaryStage.setTitle("Redis Box");
         primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.show();
