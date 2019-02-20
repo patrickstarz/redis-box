@@ -99,4 +99,9 @@ public class Connection implements Serializable {
         Connection that = (Connection) obj;
         return this.id == that.id;
     }
+
+    @Override
+    public String toString() {
+        return this.connName;
+    }
 }

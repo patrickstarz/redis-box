@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<BorderPane prefHeight="1000" prefWidth="1000"
-            xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.rick.redisbox.controller.MainController">
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.MainController">
     <left>
-        <TreeView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+        <ListView fx:id="left_list" BorderPane.alignment="CENTER_LEFT" />
     </left>
     <top>
-        <MenuBar BorderPane.alignment="CENTER">
+        <MenuBar BorderPane.alignment="TOP_CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="连接(C)">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="新建..." fx:id="menu_new_connection"
-                                  onAction="#onNewConnection"/>
+                        <MenuItem fx:id="menu_new_connection" mnemonicParsing="false" onAction="#onNewConnection" text="新建..." />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="编辑(E)">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="帮助(H)">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
+                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
     </top>
     <center>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <ScrollPane BorderPane.alignment="CENTER">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0"/>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
             </content>
         </ScrollPane>
     </center>

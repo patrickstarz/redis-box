@@ -22,7 +22,6 @@ public class FileConnectionManager implements ConnectionManager {
 
     private String readFile() {
         String path = FileConnectionManager.class.getClassLoader().getResource(storeFilePath).getPath();
-        System.out.println(path);
 //        FileUtils.readFileToString()
         BufferedReader reader;
         StringBuilder sb = new StringBuilder();

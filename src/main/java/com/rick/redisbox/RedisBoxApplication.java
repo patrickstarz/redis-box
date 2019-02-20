@@ -1,5 +1,6 @@
 package com.rick.redisbox;
 
+import com.rick.redisbox.controller.MainController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -13,14 +14,17 @@ import java.util.Objects;
 public class RedisBoxApplication extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/main.fxml")));
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/main.fxml"));
+        Parent root = loader.load();
         primaryStage.setTitle("Redis Box");
-        primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setScene(new Scene(root));
         primaryStage.setOnShown(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-
+                //加载左侧树形图
+                MainController mainController = loader.getController();
+                mainController.loadTree();
             }
         });
         primaryStage.show();
