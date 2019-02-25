@@ -4,16 +4,15 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rick.redisbox.controller.MainController">
-    <left>
-        <ListView fx:id="left_list" BorderPane.alignment="CENTER_LEFT">
-        </ListView>
-    </left>
     <top>
         <MenuBar BorderPane.alignment="TOP_CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="连接(C)">
+                <Menu mnemonicParsing="false" text="连接(C)" fx:id="menu_connections">
                     <items>
-                        <MenuItem fx:id="menu_new_connection" mnemonicParsing="false" onAction="#onNewConnection" text="新建..." />
+                        <MenuItem fx:id="menu_new_connection" mnemonicParsing="false" onAction="#onNewConnection" text="new..." />
+                        <Menu fx:id="myConnections" mnemonicParsing="false" text="my connections" />
+                        <SeparatorMenuItem/>
+                        <MenuItem mnemonicParsing="false" text="Exit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="编辑(E)">
@@ -30,10 +29,25 @@
         </MenuBar>
     </top>
     <center>
-        <ScrollPane BorderPane.alignment="CENTER">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-            </content>
-        </ScrollPane>
+        <TabPane fx:id="connectionTabPanel">
+            <!--<Tab>-->
+                <!--<BorderPane>-->
+                    <!--<left>-->
+                        <!--<VBox fx:id="leftVBox" BorderPane.alignment="CENTER_LEFT">-->
+                            <!--<TreeView >-->
+
+                            <!--</TreeView>-->
+                        <!--</VBox>-->
+                    <!--</left>-->
+                    <!--<center>-->
+                        <!--<ScrollPane BorderPane.alignment="CENTER">-->
+                            <!--<content>-->
+                                <!--<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />-->
+                            <!--</content>-->
+                        <!--</ScrollPane>-->
+                    <!--</center>-->
+                <!--</BorderPane>-->
+            <!--</Tab>-->
+        </TabPane>
     </center>
 </BorderPane>
