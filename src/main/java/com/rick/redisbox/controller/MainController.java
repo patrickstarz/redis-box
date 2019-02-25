@@ -3,7 +3,10 @@ package com.rick.redisbox.controller;
 import com.rick.redisbox.connection.Connection;
 import com.rick.redisbox.connection.ConnectionManager;
 import com.rick.redisbox.connection.FileConnectionManager;
-import javafx.beans.binding.Bindings;
+import com.rick.redisbox.jedis.JedisManager;
+import com.rick.redisbox.utils.ToastUtils;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,7 +21,6 @@ import javafx.stage.Stage;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +33,6 @@ public class MainController implements EventHandler {
     private MenuItem menu_new_connection;
     @FXML
     private Menu myConnections;
-    @FXML
-    private VBox leftVBox;
     @FXML
     private TabPane connectionTabPanel;
 
@@ -53,50 +53,56 @@ public class MainController implements EventHandler {
 
         for (Connection connection : connections) {
             MenuItem item = new MenuItem(connection.getConnName());
+            item.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Jedis jedis = jedisMap.get(connection.getId());
+                    if (jedis == null) {
+                        jedis = JedisManager.connect(connection);
+                        if (jedis != null && jedis.isConnected()) {
+                            jedisMap.put(connection.getId(), jedis);
+
+                            Tab tab = new Tab();
+                            tab.setId(connection.getId() + "");
+                            tab.setText(connection.getConnName());
+
+                            BorderPane borderPane = new BorderPane();
+                            VBox vBox = new VBox();
+                            vBox.setPrefWidth(200.0);
+                            borderPane.setLeft(vBox);
+
+                            borderPane.setCenter(new ScrollPane());
+                            tab.setContent(borderPane);
+                            connectionTabPanel.getTabs().add(tab);
+                        } else {
+                            ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
+                            //打开编辑窗口
+                        }
+                    } else {
+                        if (!jedis.isConnected()) {
+                            ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection has been expired");
+                            jedis = JedisManager.connect(connection);
+                            if (jedis != null && jedis.isConnected()) {
+                                jedisMap.put(connection.getId(), jedis);
+                            } else {
+                                ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
+                                //打开编辑窗口
+                                return;
+                            }
+                        }
+                        ObservableList tabs = connectionTabPanel.getTabs();
+                        for (Object o : tabs) {
+                            Tab tab = (Tab) o;
+                            if (tab.getId().equals(connection.getId() + "")) {
+                                connectionTabPanel.getSelectionModel().select(tab);
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
             myConnections.getItems().add(item);
-
-//            Tab tab = new Tab(connection.getConnName());
-//            BorderPane borderPane = new BorderPane();
-
-//            VBox vBox = new VBox();
-//            vBox.setPrefWidth(200.0);
-//            borderPane.setLeft(vBox);
-//
-//            borderPane.setCenter(new ScrollPane());
-//            tab.setContent(borderPane);
-//            connectionTabPanel.getTabs().add(tab);
         }
-
-        //添加双击事件
-//        left_list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-////                    int index = left_list.getSelectionModel().getSelectedIndex();
-////                    left_list.getSelectionModel().getSelectedItem();
-//
-//                    Connection connection = (Connection) left_list.getItems().get(index);
-//                    Jedis jedis = jedisMap.get(connection.getId());
-//                    if (jedis == null) {
-//                        jedis = JedisManager.connect(connection);
-//                        if (jedis != null) {
-//                            jedisMap.put(connection.getId(), jedis);
-//                            //TODO 展开tree
-//                            TreeView treeView = new TreeView();
-//
-//                            TreeItem item = new TreeItem("root");
-//                            treeView.setRoot(item);
-//
-//                        }
-//                    } else {
-//                        //TODO 展开tree
-//                    }
-//
-//                    //加载tree
-//                    left_list.getSelectionModel().getSelectedItem();
-//                }
-//            }
-//        });
     }
 
     @Override

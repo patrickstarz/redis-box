@@ -7,20 +7,20 @@
     <top>
         <MenuBar BorderPane.alignment="TOP_CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="连接(C)" fx:id="menu_connections">
+                <Menu mnemonicParsing="false" text="File" fx:id="menu_connections">
                     <items>
-                        <MenuItem fx:id="menu_new_connection" mnemonicParsing="false" onAction="#onNewConnection" text="new..." />
-                        <Menu fx:id="myConnections" mnemonicParsing="false" text="my connections" />
+                        <MenuItem fx:id="menu_new_connection" mnemonicParsing="false" onAction="#onNewConnection" text="New..." />
+                        <Menu fx:id="myConnections" mnemonicParsing="false" text="Connections" />
                         <SeparatorMenuItem/>
                         <MenuItem mnemonicParsing="false" text="Exit" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="编辑(E)">
+                <Menu mnemonicParsing="false" text="Edit">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Delete" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="帮助(H)">
+                <Menu mnemonicParsing="false" text="Help">
                     <items>
                         <MenuItem mnemonicParsing="false" text="About" />
                     </items>
