@@ -7,12 +7,13 @@
     <top>
         <MenuBar BorderPane.alignment="TOP_CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="File" fx:id="menu_connections">
+                <Menu mnemonicParsing="false" text="File" fx:id="menuFile">
                     <items>
-                        <MenuItem fx:id="menu_new_connection" mnemonicParsing="false" onAction="#onNewConnection" text="New..." />
-                        <Menu fx:id="myConnections" mnemonicParsing="false" text="Connections" />
+                        <MenuItem fx:id="menuNewConnection" mnemonicParsing="false" onAction="#onNewConnection" text="New..." />
+                        <Menu fx:id="menuOpenConnections" mnemonicParsing="false" text="Open..." />
+                        <Menu fx:id="menuEditConnections" mnemonicParsing="false" text="Edit..." />
                         <SeparatorMenuItem/>
-                        <MenuItem mnemonicParsing="false" text="Exit" />
+                        <MenuItem mnemonicParsing="false" text="Exit" onAction="#onExit"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">

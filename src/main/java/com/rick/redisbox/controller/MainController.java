@@ -5,6 +5,7 @@ import com.rick.redisbox.connection.ConnectionManager;
 import com.rick.redisbox.connection.FileConnectionManager;
 import com.rick.redisbox.jedis.JedisManager;
 import com.rick.redisbox.utils.ToastUtils;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -30,9 +31,11 @@ public class MainController implements EventHandler {
     public static Map<Long, Jedis> jedisMap = new HashMap<>();
 
     @FXML
-    private MenuItem menu_new_connection;
+    private MenuItem menuNewConnection;
     @FXML
-    private Menu myConnections;
+    private Menu menuOpenConnections;
+    @FXML
+    private Menu menuEditConnections;
     @FXML
     private TabPane connectionTabPanel;
 
@@ -47,7 +50,7 @@ public class MainController implements EventHandler {
         stage.show();
     }
 
-    public void loadTree() {
+    public void loadData() {
         ConnectionManager manager = new FileConnectionManager();
         connections = manager.getAll();
 
@@ -62,21 +65,9 @@ public class MainController implements EventHandler {
                         if (jedis != null && jedis.isConnected()) {
                             jedisMap.put(connection.getId(), jedis);
 
-                            Tab tab = new Tab();
-                            tab.setId(connection.getId() + "");
-                            tab.setText(connection.getConnName());
-
-                            BorderPane borderPane = new BorderPane();
-                            VBox vBox = new VBox();
-                            vBox.setPrefWidth(200.0);
-                            borderPane.setLeft(vBox);
-
-                            borderPane.setCenter(new ScrollPane());
-                            tab.setContent(borderPane);
-                            connectionTabPanel.getTabs().add(tab);
+                            openNewTab(connection, jedis);
                         } else {
-                            ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
-                            //打开编辑窗口
+//                            ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
                         }
                     } else {
                         if (!jedis.isConnected()) {
@@ -86,7 +77,6 @@ public class MainController implements EventHandler {
                                 jedisMap.put(connection.getId(), jedis);
                             } else {
                                 ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
-                                //打开编辑窗口
                                 return;
                             }
                         }
@@ -101,12 +91,42 @@ public class MainController implements EventHandler {
                     }
                 }
             });
-            myConnections.getItems().add(item);
+            menuOpenConnections.getItems().add(item);
         }
+    }
+
+    public void openNewTab(Connection connection, Jedis jedis) {
+        Tab tab = new Tab();
+        tab.setId(connection.getId() + "");
+        tab.setText(connection.getConnName());
+
+        BorderPane borderPane = new BorderPane();
+
+        BorderPane borderPane2 = new BorderPane();
+        borderPane2.setPrefWidth(200.0);
+
+        TreeView treeView = new TreeView();
+        TreeItem root = new TreeItem(connection.getConnName());
+        treeView.setRoot(root);
+        for (int i = 0; i < 16; i++) {
+            TreeItem item = new TreeItem(i);
+            root.getChildren().add(item);
+        }
+        borderPane2.setCenter(treeView);
+
+        borderPane.setLeft(borderPane2);
+        borderPane.setCenter(new ScrollPane());
+        tab.setContent(borderPane);
+        connectionTabPanel.getTabs().add(tab);
     }
 
     @Override
     public void handle(Event event) {
 
+    }
+
+    @FXML
+    protected void onExit() {
+        Platform.exit();
     }
 }

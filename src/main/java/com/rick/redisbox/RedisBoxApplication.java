@@ -9,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.util.Objects;
-
 public class RedisBoxApplication extends Application {
 
     @Override
@@ -24,7 +22,7 @@ public class RedisBoxApplication extends Application {
             public void handle(WindowEvent event) {
                 //加载左侧树形图
                 MainController mainController = loader.getController();
-                mainController.loadTree();
+                mainController.loadData();
             }
         });
         primaryStage.show();
