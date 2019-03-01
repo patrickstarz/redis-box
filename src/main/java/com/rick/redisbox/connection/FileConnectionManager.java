@@ -48,7 +48,7 @@ public class FileConnectionManager implements ConnectionManager {
 
         synchronized (FileConnectionManager.class) {
             String json = JSONArray.toJSONString(list);
-            FileUtils.write(file, json, "UTF-8");
+            FileUtils.writeStringToFile(file, json, "UTF-8");
         }
     }
 

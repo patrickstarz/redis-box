@@ -1,6 +1,6 @@
 package com.rick.redisbox;
 
-import com.rick.redisbox.controller.MainController;
+import com.rick.redisbox.common.Component;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +21,8 @@ public class RedisBoxApplication extends Application {
             @Override
             public void handle(WindowEvent event) {
                 //加载左侧树形图
-                MainController mainController = loader.getController();
-                mainController.loadData();
+                Component.mainController = loader.getController();
+                Component.mainController.loadData();
             }
         });
         primaryStage.show();

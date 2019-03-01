@@ -1,5 +1,6 @@
 package com.rick.redisbox.controller;
 
+import com.rick.redisbox.common.Component;
 import com.rick.redisbox.connection.Connection;
 import com.rick.redisbox.connection.ConnectionManager;
 import com.rick.redisbox.connection.FileConnectionManager;
@@ -41,20 +42,27 @@ public class MainController implements EventHandler {
 
     @FXML
     protected void onNewConnection() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/new_connection.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/new_connection.fxml"));
+        Component.newConnectionController = loader.getController();
+        Parent root = loader.load();
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);  //模态
         stage.setResizable(false);
+        stage.setTitle("New Connection");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
     public void loadData() {
+        menuOpenConnections.getItems().clear();
+        menuEditConnections.getItems().clear();
+
         ConnectionManager manager = new FileConnectionManager();
         connections = manager.getAll();
 
         for (Connection connection : connections) {
+            //为Open菜单添加子菜单
             MenuItem item = new MenuItem(connection.getConnName());
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -92,6 +100,33 @@ public class MainController implements EventHandler {
                 }
             });
             menuOpenConnections.getItems().add(item);
+
+            //为编辑菜单添加子菜单
+            MenuItem item2 = new MenuItem(connection.getConnName());
+            item2.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/edit_connection.fxml"));
+                        Parent root = loader.load();
+                        EditConnectionController controller = loader.getController();
+                        Component.editConnectionController = controller;
+
+                        Stage stage = new Stage();
+                        stage.initModality(Modality.APPLICATION_MODAL);  //模态
+                        stage.setResizable(false);
+                        stage.setTitle("Edit Connection");
+                        stage.setScene(new Scene(root));
+                        stage.show();
+
+                        //设置文本框内容
+                        controller.initData(connection);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            menuEditConnections.getItems().add(item2);
         }
     }
 

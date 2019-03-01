@@ -1,16 +1,16 @@
 package com.rick.redisbox.controller;
 
+import com.rick.redisbox.common.Component;
 import com.rick.redisbox.connection.Connection;
 import com.rick.redisbox.connection.ConnectionManager;
 import com.rick.redisbox.connection.FileConnectionManager;
+import com.rick.redisbox.jedis.JedisManager;
 import com.rick.redisbox.utils.ToastUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.StringUtils;
-import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 
@@ -46,7 +46,9 @@ public class NewConnectionController {
 
             Stage stage = (Stage) btnConfirmNewConn.getScene().getWindow();
             stage.close();
-            //TODO refresh tree menu
+
+            //reload menus
+            Component.mainController.loadData();
         } catch (IOException e) {
             e.printStackTrace();
             ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Add failed");
@@ -67,21 +69,6 @@ public class NewConnectionController {
         int port = Integer.parseInt(txtConnPort.getText());
         String auth = txtConnAuth.getText();
 
-        try {
-            Jedis jedis = new Jedis(host, port);
-            if (StringUtils.isNotEmpty(auth)) {
-                jedis.auth(auth);
-            }
-            if (jedis.isConnected()) {
-                ToastUtils.alert(Alert.AlertType.INFORMATION, "Tip", "", "Successful Connected to server!");
-                return true;
-            } else {
-                ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
-        }
-        return false;
+        return JedisManager.testConnection(host, port, auth);
     }
 }

@@ -26,4 +26,23 @@ public class JedisManager {
         }
         return null;
     }
+
+    public static boolean testConnection(String host, int port, String auth) {
+        try {
+            Jedis jedis = new Jedis(host, port);
+            if (StringUtils.isNotEmpty(auth)) {
+                jedis.auth(auth);
+            }
+            if (jedis.isConnected()) {
+                ToastUtils.alert(Alert.AlertType.INFORMATION, "Tip", "", "Successful Connected to server!");
+                return true;
+            } else {
+                ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
+        }
+        return false;
+    }
 }
