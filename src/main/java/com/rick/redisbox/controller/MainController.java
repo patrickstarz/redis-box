@@ -7,6 +7,8 @@ import com.rick.redisbox.connection.FileConnectionManager;
 import com.rick.redisbox.jedis.JedisManager;
 import com.rick.redisbox.utils.ToastUtils;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -20,12 +22,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MainController implements EventHandler {
     public static List<Connection> connections;
@@ -138,21 +142,58 @@ public class MainController implements EventHandler {
         BorderPane borderPane = new BorderPane();
 
         BorderPane borderPane2 = new BorderPane();
-        borderPane2.setPrefWidth(200.0);
+        borderPane2.setMinWidth(200.0);
 
         TreeView treeView = new TreeView();
         TreeItem root = new TreeItem(connection.getConnName());
+        root.setExpanded(true);
         treeView.setRoot(root);
         for (int i = 0; i < 16; i++) {
             TreeItem item = new TreeItem(i);
             root.getChildren().add(item);
         }
+        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            TreeItem<Integer> selectedItem = (TreeItem<Integer>) newValue;
+            int level = treeView.getTreeItemLevel(selectedItem);
+
+            onTreeClick(selectedItem, level, jedis);
+        });
+
         borderPane2.setCenter(treeView);
 
         borderPane.setLeft(borderPane2);
         borderPane.setCenter(new ScrollPane());
         tab.setContent(borderPane);
         connectionTabPanel.getTabs().add(tab);
+    }
+
+    public void onTreeClick(TreeItem treeItem, int itemLevel, Jedis jedis) {
+        Object value = treeItem.getValue();
+        //根节点
+        if (itemLevel == 0) {
+            // do nothing
+        }
+        //db index节点
+        if (itemLevel == 1) {
+            if (treeItem.isExpanded()) {
+                return;
+            }
+            int dbIndex = Integer.parseInt(value.toString());
+            jedis.select(dbIndex);
+            Set<String> keys = jedis.keys("*");
+            if (keys == null || keys.size() == 0) {
+                ToastUtils.alert(Alert.AlertType.INFORMATION, "Tip", "", "No data in this index!");
+            } else {
+                for (String key : keys) {
+                    TreeItem item = new TreeItem(key);
+                    treeItem.getChildren().add(item);
+                }
+            }
+        }
+        //data key节点
+        if (itemLevel == 2) {
+
+        }
     }
 
     @Override
