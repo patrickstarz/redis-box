@@ -6,6 +6,8 @@ import com.rick.redisbox.connection.ConnectionManager;
 import com.rick.redisbox.connection.FileConnectionManager;
 import com.rick.redisbox.jedis.JedisManager;
 import com.rick.redisbox.utils.ToastUtils;
+import com.rick.redisbox.view.DragResizeMod;
+import com.rick.redisbox.view.DragResizer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,11 +17,18 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
@@ -139,10 +148,10 @@ public class MainController implements EventHandler {
         tab.setId(connection.getId() + "");
         tab.setText(connection.getConnName());
 
-        BorderPane borderPane = new BorderPane();
+        HBox hbox = new HBox();
+        hbox.requestLayout();
 
-        BorderPane borderPane2 = new BorderPane();
-        borderPane2.setMinWidth(200.0);
+        ScrollPane scrollPane = new ScrollPane();
 
         TreeView treeView = new TreeView();
         TreeItem root = new TreeItem(connection.getConnName());
@@ -152,19 +161,48 @@ public class MainController implements EventHandler {
             TreeItem item = new TreeItem(i);
             root.getChildren().add(item);
         }
-        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            TreeItem<Integer> selectedItem = (TreeItem<Integer>) newValue;
-            int level = treeView.getTreeItemLevel(selectedItem);
+        treeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    TreeItem<Integer> selectedItem = (TreeItem<Integer>) treeView.getSelectionModel().getSelectedItem();
+                    int level = treeView.getTreeItemLevel(selectedItem);
 
-            onTreeClick(selectedItem, level, jedis);
+                    onTreeClick(selectedItem, level, jedis);
+                }
+            }
         });
+        hbox.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double x = event.getX();
+//                System.out.println(x + ":" + treeView.getWidth());
+                if (x >= treeView.getWidth() - 2 && x <= treeView.getWidth() + 2) {
+                    connectionTabPanel.setCursor(Cursor.H_RESIZE);
+                } else {
+                    connectionTabPanel.setCursor(Cursor.DEFAULT);
+                }
+            }
+        });
+        hbox.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double x = event.getX();
 
-        borderPane2.setCenter(treeView);
+                treeView.setPrefWidth(x);
+                scrollPane.setPrefWidth(connectionTabPanel.getPrefWidth() - treeView.getPrefWidth());
 
-        borderPane.setLeft(borderPane2);
-        borderPane.setCenter(new ScrollPane());
-        tab.setContent(borderPane);
-        connectionTabPanel.getTabs().add(tab);
+                connectionTabPanel.setCursor(Cursor.DEFAULT);
+            }
+        });
+        hbox.getChildren().
+
+                add(treeView);
+
+        tab.setContent(hbox);
+        connectionTabPanel.getTabs().
+
+                add(tab);
     }
 
     public void onTreeClick(TreeItem treeItem, int itemLevel, Jedis jedis) {

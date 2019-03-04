@@ -25,6 +25,7 @@ public class RedisBoxApplication extends Application {
                 Component.mainController.loadData();
             }
         });
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 
