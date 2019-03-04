@@ -161,6 +161,7 @@ public class MainController implements EventHandler {
             TreeItem item = new TreeItem(i);
             root.getChildren().add(item);
         }
+
         treeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -169,6 +170,19 @@ public class MainController implements EventHandler {
                     int level = treeView.getTreeItemLevel(selectedItem);
 
                     onTreeClick(selectedItem, level, jedis);
+                }
+            }
+        });
+        hbox.getChildren().add(treeView);
+
+        treeView.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double x = event.getX();
+                if (x >= treeView.getWidth() - 2 && x <= treeView.getWidth() + 2) {
+                    connectionTabPanel.setCursor(Cursor.H_RESIZE);
+                } else {
+                    connectionTabPanel.setCursor(Cursor.DEFAULT);
                 }
             }
         });
@@ -195,14 +209,8 @@ public class MainController implements EventHandler {
                 connectionTabPanel.setCursor(Cursor.DEFAULT);
             }
         });
-        hbox.getChildren().
-
-                add(treeView);
-
         tab.setContent(hbox);
-        connectionTabPanel.getTabs().
-
-                add(tab);
+        connectionTabPanel.getTabs().add(tab);
     }
 
     public void onTreeClick(TreeItem treeItem, int itemLevel, Jedis jedis) {
