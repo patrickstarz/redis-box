@@ -1,0 +1,10 @@
+.treeview .scroll-bar:vertical {
+    -fx-pref-width: 0;
+    -fx-shape: " ";
+}
+
+.treeview .scroll-bar:vertical .decrement-arrow,
+.treeview .scroll-bar:vertical .increment-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}

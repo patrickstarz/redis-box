@@ -157,11 +157,13 @@ public class MainController implements EventHandler {
         TreeItem root = new TreeItem(connection.getConnName());
         root.setExpanded(true);
         treeView.setRoot(root);
+        treeView.getStyleClass().add("treeview");
         for (int i = 0; i < 16; i++) {
             TreeItem item = new TreeItem(i);
             root.getChildren().add(item);
         }
 
+        //点击树形图
         treeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -175,7 +177,8 @@ public class MainController implements EventHandler {
         });
         hbox.getChildren().add(treeView);
 
-        treeView.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        //鼠标变为竖线
+        EventHandler eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 double x = event.getX();
@@ -185,23 +188,15 @@ public class MainController implements EventHandler {
                     connectionTabPanel.setCursor(Cursor.DEFAULT);
                 }
             }
-        });
-        hbox.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                double x = event.getX();
-//                System.out.println(x + ":" + treeView.getWidth());
-                if (x >= treeView.getWidth() - 2 && x <= treeView.getWidth() + 2) {
-                    connectionTabPanel.setCursor(Cursor.H_RESIZE);
-                } else {
-                    connectionTabPanel.setCursor(Cursor.DEFAULT);
-                }
-            }
-        });
+        };
+        treeView.setOnMouseMoved(eventHandler);
+        hbox.setOnMouseMoved(eventHandler);
+        //鼠标拖拽
         hbox.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 double x = event.getX();
+                event.getEventType();
 
                 treeView.setPrefWidth(x);
                 scrollPane.setPrefWidth(connectionTabPanel.getPrefWidth() - treeView.getPrefWidth());
@@ -209,6 +204,7 @@ public class MainController implements EventHandler {
                 connectionTabPanel.setCursor(Cursor.DEFAULT);
             }
         });
+
         tab.setContent(hbox);
         connectionTabPanel.getTabs().add(tab);
     }

@@ -16,7 +16,9 @@ public class RedisBoxApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/main.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Redis Box");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("css/stylesheet.css");
+        primaryStage.setScene(scene);
         primaryStage.setOnShown(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
