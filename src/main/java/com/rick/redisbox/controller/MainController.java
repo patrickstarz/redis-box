@@ -1,16 +1,13 @@
 package com.rick.redisbox.controller;
 
 import com.rick.redisbox.common.Component;
+import com.rick.redisbox.common.DataType;
 import com.rick.redisbox.connection.Connection;
 import com.rick.redisbox.connection.ConnectionManager;
 import com.rick.redisbox.connection.FileConnectionManager;
 import com.rick.redisbox.jedis.JedisManager;
 import com.rick.redisbox.utils.ToastUtils;
-import com.rick.redisbox.view.DragResizeMod;
-import com.rick.redisbox.view.DragResizer;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -18,20 +15,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseDragEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
@@ -43,6 +35,12 @@ import java.util.Set;
 public class MainController implements EventHandler {
     public static List<Connection> connections;
     public static Map<Long, Jedis> jedisMap = new HashMap<>();
+    Image k = new Image("pics/k.png");
+    Image l = new Image("pics/l.png");
+    Image s = new Image("pics/s.png");
+    Image h = new Image("pics/h.png");
+    Image z = new Image("pics/z.png");
+    Image n = new Image("pics/n.png");
 
     @FXML
     private MenuItem menuNewConnection;
@@ -228,6 +226,7 @@ public class MainController implements EventHandler {
             } else {
                 for (String key : keys) {
                     TreeItem item = new TreeItem(key);
+                    item.setGraphic(new ImageView(getImageByType(jedis, key)));
                     treeItem.getChildren().add(item);
                 }
             }
@@ -236,6 +235,34 @@ public class MainController implements EventHandler {
         if (itemLevel == 2) {
 
         }
+    }
+
+    private Image getImageByType(Jedis jedis, String key) {
+        String type = jedis.type(key);
+        DataType dataType = DataType.getByType(type);
+
+        Image image;
+        switch (dataType) {
+            case KEY_VALUE:
+                image = k;
+                break;
+            case LIST:
+                image = l;
+                break;
+            case SET:
+                image = s;
+                break;
+            case HASH:
+                image = h;
+                break;
+            case ZSET:
+                image = z;
+                break;
+            default:
+                image = n;
+                break;
+        }
+        return image;
     }
 
     @Override
