@@ -10,7 +10,6 @@ import com.rick.redisbox.utils.ToastUtils;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class MainController implements EventHandler {
+public class MainController {
     public static List<Connection> connections;
     public static Map<Long, Jedis> jedisMap = new HashMap<>();
     Image k = new Image("pics/k.png");
@@ -149,8 +148,6 @@ public class MainController implements EventHandler {
         HBox hbox = new HBox();
         hbox.requestLayout();
 
-        ScrollPane scrollPane = new ScrollPane();
-
         TreeView treeView = new TreeView();
         TreeItem root = new TreeItem(connection.getConnName());
         root.setExpanded(true);
@@ -169,11 +166,16 @@ public class MainController implements EventHandler {
                     TreeItem<Integer> selectedItem = (TreeItem<Integer>) treeView.getSelectionModel().getSelectedItem();
                     int level = treeView.getTreeItemLevel(selectedItem);
 
-                    onTreeClick(selectedItem, level, jedis);
+                    onTreeClick(selectedItem, level, jedis, hbox);
                 }
             }
         });
+
         hbox.getChildren().add(treeView);
+
+//        ScrollPane scrollPane = new ScrollPane();
+//        scrollPane.prefWidthProperty().bind(connectionTabPanel.prefWidthProperty().subtract(treeView.prefWidthProperty()));
+//        hbox.getChildren().add(scrollPane);
 
         //鼠标变为竖线
         EventHandler eventHandler = new EventHandler<MouseEvent>() {
@@ -197,7 +199,6 @@ public class MainController implements EventHandler {
                 event.getEventType();
 
                 treeView.setPrefWidth(x);
-                scrollPane.setPrefWidth(connectionTabPanel.getPrefWidth() - treeView.getPrefWidth());
 
                 connectionTabPanel.setCursor(Cursor.DEFAULT);
             }
@@ -207,7 +208,7 @@ public class MainController implements EventHandler {
         connectionTabPanel.getTabs().add(tab);
     }
 
-    public void onTreeClick(TreeItem treeItem, int itemLevel, Jedis jedis) {
+    public void onTreeClick(TreeItem treeItem, int itemLevel, Jedis jedis, HBox hbox) {
         Object value = treeItem.getValue();
         //根节点
         if (itemLevel == 0) {
@@ -233,7 +234,7 @@ public class MainController implements EventHandler {
         }
         //data key节点
         if (itemLevel == 2) {
-
+            onDataItemClick(treeItem, jedis, hbox);
         }
     }
 
@@ -265,9 +266,47 @@ public class MainController implements EventHandler {
         return image;
     }
 
-    @Override
-    public void handle(Event event) {
+    private void onDataItemClick(TreeItem treeItem, Jedis jedis, HBox hbox) {
+        String key = (String) treeItem.getValue();
+        String type = jedis.type(key);
+        DataType dataType = DataType.getByType(type);
+        switch (dataType) {
+            case KEY_VALUE:
+                onKeyValueClick(treeItem, jedis, hbox);
+                break;
+            case LIST:
+                onListClick(treeItem, jedis, hbox);
+                break;
+            case SET:
+                onSetClick(treeItem, jedis, hbox);
+                break;
+            case HASH:
+                onHashClick(treeItem, jedis, hbox);
+                break;
+            case ZSET:
+                onZSetClick(treeItem, jedis, hbox);
+                break;
+            default:
+//                onKeyValueClick(treeItem, jedis);
+                break;
+        }
+    }
 
+    private void onKeyValueClick(TreeItem treeItem, Jedis jedis, HBox hbox) {
+
+        ScrollPane scrollPane = new ScrollPane();
+    }
+
+    private void onListClick(TreeItem treeItem, Jedis jedis, HBox hbox) {
+    }
+
+    private void onSetClick(TreeItem treeItem, Jedis jedis, HBox hbox) {
+    }
+
+    private void onHashClick(TreeItem treeItem, Jedis jedis, HBox hbox) {
+    }
+
+    private void onZSetClick(TreeItem treeItem, Jedis jedis, HBox hbox) {
     }
 
     @FXML
