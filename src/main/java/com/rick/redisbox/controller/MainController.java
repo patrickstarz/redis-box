@@ -10,6 +10,7 @@ import com.rick.redisbox.utils.ToastUtils;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +34,7 @@ import java.util.Set;
 
 public class MainController {
     public static List<Connection> connections;
-    public static Map<Long, Jedis> jedisMap = new HashMap<>();
+    public static Map<String, Jedis> jedisMap = new HashMap<>();
     Image k = new Image("pics/k.png");
     Image l = new Image("pics/l.png");
     Image s = new Image("pics/s.png");
@@ -77,11 +78,11 @@ public class MainController {
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    Jedis jedis = jedisMap.get(connection.getId());
+                    Jedis jedis = jedisMap.get(connection.getId() + "");
                     if (jedis == null) {
                         jedis = JedisManager.connect(connection);
                         if (jedis != null && jedis.isConnected()) {
-                            jedisMap.put(connection.getId(), jedis);
+                            jedisMap.put(connection.getId() + "", jedis);
 
                             openNewTab(connection, jedis);
                         } else {
@@ -92,7 +93,7 @@ public class MainController {
                             ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection has been expired");
                             jedis = JedisManager.connect(connection);
                             if (jedis != null && jedis.isConnected()) {
-                                jedisMap.put(connection.getId(), jedis);
+                                jedisMap.put(connection.getId() + "", jedis);
                             } else {
                                 ToastUtils.alert(Alert.AlertType.ERROR, "Tip", "", "Connection failed");
                                 return;
@@ -205,6 +206,16 @@ public class MainController {
         });
 
         tab.setContent(hbox);
+        tab.setOnClosed(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                jedis.close();
+
+                String id = tab.getId();
+                jedisMap.remove(id);
+            }
+        });
+
         connectionTabPanel.getTabs().add(tab);
     }
 
