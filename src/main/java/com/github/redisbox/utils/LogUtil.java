@@ -1,4 +1,4 @@
-package com.rick.redisbox.utils;
+package com.github.redisbox.utils;
 
 /**
  * @author rick

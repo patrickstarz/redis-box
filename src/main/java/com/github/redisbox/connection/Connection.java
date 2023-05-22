@@ -1,4 +1,4 @@
-package com.rick.redisbox.connection;
+package com.github.redisbox.connection;
 
 import java.io.Serializable;
 

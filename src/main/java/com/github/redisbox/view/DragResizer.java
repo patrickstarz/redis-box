@@ -1,4 +1,4 @@
-package com.rick.redisbox.view;
+package com.github.redisbox.view;
 
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;

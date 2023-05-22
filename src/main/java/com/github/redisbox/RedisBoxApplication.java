@@ -1,6 +1,6 @@
-package com.rick.redisbox;
+package com.github.redisbox;
 
-import com.rick.redisbox.common.Component;
+import com.github.redisbox.common.Component;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class RedisBoxApplication extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -29,10 +33,5 @@ public class RedisBoxApplication extends Application {
         });
         primaryStage.setResizable(true);
         primaryStage.show();
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

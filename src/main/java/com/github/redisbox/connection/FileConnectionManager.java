@@ -1,4 +1,4 @@
-package com.rick.redisbox.connection;
+package com.github.redisbox.connection;
 
 import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.io.FileUtils;

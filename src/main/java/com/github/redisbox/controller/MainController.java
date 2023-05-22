@@ -1,12 +1,12 @@
-package com.rick.redisbox.controller;
+package com.github.redisbox.controller;
 
-import com.rick.redisbox.common.Component;
-import com.rick.redisbox.common.DataType;
-import com.rick.redisbox.connection.Connection;
-import com.rick.redisbox.connection.ConnectionManager;
-import com.rick.redisbox.connection.FileConnectionManager;
-import com.rick.redisbox.jedis.JedisManager;
-import com.rick.redisbox.utils.ToastUtils;
+import com.github.redisbox.connection.ConnectionManager;
+import com.github.redisbox.common.Component;
+import com.github.redisbox.common.DataType;
+import com.github.redisbox.connection.Connection;
+import com.github.redisbox.connection.FileConnectionManager;
+import com.github.redisbox.jedis.JedisManager;
+import com.github.redisbox.utils.ToastUtils;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,16 +31,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 public class MainController {
     public static List<Connection> connections;
     public static Map<String, Jedis> jedisMap = new HashMap<>();
-    Image k = new Image("pics/k.png");
-    Image l = new Image("pics/l.png");
-    Image s = new Image("pics/s.png");
-    Image h = new Image("pics/h.png");
-    Image z = new Image("pics/z.png");
-    Image n = new Image("pics/n.png");
+    Image k = new Image("file:/pics/k.png");
+    Image l = new Image("file:/pics/l.png");
+    Image s = new Image("file:/pics/s.png");
+    Image h = new Image("file:/pics/h.png");
+    Image z = new Image("file:/pics/z.png");
+    Image n = new Image("file:/pics/n.png");
 
     @FXML
     private MenuItem menuNewConnection;

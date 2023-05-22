@@ -1,4 +1,4 @@
-package com.rick.redisbox.utils;
+package com.github.redisbox.utils;
 
 import javafx.scene.control.Alert;
 

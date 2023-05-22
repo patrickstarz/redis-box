@@ -1,11 +1,11 @@
-package com.rick.redisbox.controller;
+package com.github.redisbox.controller;
 
-import com.rick.redisbox.common.Component;
-import com.rick.redisbox.connection.Connection;
-import com.rick.redisbox.connection.ConnectionManager;
-import com.rick.redisbox.connection.FileConnectionManager;
-import com.rick.redisbox.jedis.JedisManager;
-import com.rick.redisbox.utils.ToastUtils;
+import com.github.redisbox.common.Component;
+import com.github.redisbox.connection.Connection;
+import com.github.redisbox.connection.ConnectionManager;
+import com.github.redisbox.connection.FileConnectionManager;
+import com.github.redisbox.jedis.JedisManager;
+import com.github.redisbox.utils.ToastUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

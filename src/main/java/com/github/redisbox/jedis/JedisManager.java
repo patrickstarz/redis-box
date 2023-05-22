@@ -1,7 +1,7 @@
-package com.rick.redisbox.jedis;
+package com.github.redisbox.jedis;
 
-import com.rick.redisbox.connection.Connection;
-import com.rick.redisbox.utils.ToastUtils;
+import com.github.redisbox.connection.Connection;
+import com.github.redisbox.utils.ToastUtils;
 import javafx.scene.control.Alert;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Jedis;

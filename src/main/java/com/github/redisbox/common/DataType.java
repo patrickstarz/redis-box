@@ -1,4 +1,4 @@
-package com.rick.redisbox.common;
+package com.github.redisbox.common;
 
 public enum DataType {
     KEY_VALUE("string"),
