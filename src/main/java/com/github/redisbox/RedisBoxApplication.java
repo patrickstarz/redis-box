@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.net.URL;
+
 public class RedisBoxApplication extends Application {
 
     public static void main(String[] args) {
@@ -23,13 +25,10 @@ public class RedisBoxApplication extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("css/stylesheet.css");
         primaryStage.setScene(scene);
-        primaryStage.setOnShown(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                //加载左侧树形图
-                Component.mainController = loader.getController();
-                Component.mainController.loadData();
-            }
+        primaryStage.setOnShown(event -> {
+            // 加载左侧树形图
+            Component.mainController = loader.getController();
+            Component.mainController.loadData();
         });
         primaryStage.setResizable(true);
         primaryStage.show();

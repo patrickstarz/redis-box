@@ -8,3 +8,12 @@
     -fx-shape: " ";
     -fx-padding: 0;
 }
+
+.tab {
+    -fx-start-margin: 0;
+    -fx-padding: 0;
+    -fx-tab-min-width: 300px;
+    -fx-tab-max-width: 300px;
+    -fx-min-width: 300px;
+    -fx-max-width: 300px;
+}
